@@ -17,7 +17,8 @@ defmodule BillCrudWeb.Router do
   scope "/", BillCrudWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", BillController, :index
+    resources "/bills", BillController
   end
 
   # Other scopes may use custom stacks.
