@@ -22,7 +22,9 @@ defmodule BillCrudWeb.BillController do
         |> redirect(to: Routes.bill_path(conn, :show, bill))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_status(422)
+        |> render("new.html", changeset: changeset)
     end
   end
 
