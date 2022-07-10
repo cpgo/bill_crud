@@ -6,7 +6,7 @@ defmodule BillCrudWeb.BillController do
 
   def index(conn, _params) do
     bills = Pages.list_bills()
-    render(conn, "index.html", bills: bills)
+    render(conn, :index, bills: bills)
   end
 
   def new(conn, _params) do

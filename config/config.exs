@@ -51,6 +51,9 @@ config :mime, :types, %{
   "text/vnd.turbo-stream.html" => ["turbo-html"]
 }
 
+config :phoenix_view, :format_encoders,
+  'turbo-html': Phoenix.HTML.Engine
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
