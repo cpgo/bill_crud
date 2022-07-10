@@ -105,6 +105,9 @@ defmodule BillCrudWeb do
   When used, dispatch to the appropriate controller/view/etc.
   """
   defmacro __using__(which) when is_atom(which) do
-    apply(__MODULE__, which, [])
+    quote do
+      unquote(apply(__MODULE__, which, []))
+      unquote(apply(PhoenixTurbo, which, []))
+    end
   end
 end
