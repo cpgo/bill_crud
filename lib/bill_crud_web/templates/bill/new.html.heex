@@ -1,5 +1,5 @@
-<h1>New Bill</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+<turbo-frame id="bills_index">
+  <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+</turbo-frame>
 
 <span><%= link "Back", to: Routes.bill_path(@conn, :index) %></span>

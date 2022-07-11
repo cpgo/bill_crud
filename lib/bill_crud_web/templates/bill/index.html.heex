@@ -2,4 +2,6 @@
 
 <%= render("_index.html", %{bills: @bills, conn: @conn}) %>
 
+<%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+
 <span><%= link "New Bill", to: Routes.bill_path(@conn, :new) %></span>
