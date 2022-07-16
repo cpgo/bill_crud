@@ -1,5 +1,0 @@
-<turbo-frame id="bills-index">
-  <%= for bill <- @bills do %>
-    <%= render("_row.html", %{bill: bill, conn: @conn}) %>
-  <% end %>
-</turbo-frame>
