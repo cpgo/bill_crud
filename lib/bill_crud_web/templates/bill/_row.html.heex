@@ -4,10 +4,10 @@
   <strong>Description:</strong>
   <%= @bill.description %>
   <div>
-    <span><%= link "Show", to: Routes.bill_path(@conn, :show, @bill) %></span>
+    <span><%= link "Show", to: Routes.bill_path(BillCrudWeb.Endpoint, :show, @bill) %></span>
     <turbo-frame id={"bill-#{@bill.id}"}>
-      <span><%= link "Edit", to: Routes.bill_path(@conn, :edit, @bill) %></span>
+      <span><%= link "Edit", to: Routes.bill_path(BillCrudWeb.Endpoint, :edit, @bill) %></span>
     </turbo-frame>
-    <span><%= link "Delete", to: Routes.bill_path(@conn, :delete, @bill), method: :delete, data: [confirm: "Are you sure?", "turbo-action": "replace"] %></span>
+    <span><%= link "Delete", to: Routes.bill_path(BillCrudWeb.Endpoint, :delete, @bill), method: :delete, data: [confirm: "Are you sure?", "turbo-action": "replace"] %></span>
   </div>
 </div>

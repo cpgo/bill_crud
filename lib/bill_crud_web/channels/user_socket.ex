@@ -7,19 +7,8 @@ defmodule BillCrudWeb.UserSocket do
   # assign values that can be accessed by your channel topics.
 
   ## Channels
-  # Uncomment the following line to define a "room:*" topic
-  # pointing to the `BillCrudWeb.RoomChannel`:
 
   channel "turbo-streams:*", PhoenixTurbo.Channel
-  # channel "room:*", BillCrudWeb.RoomChannel
-  #
-  # To create a channel file, use the mix task:
-  #
-  #     mix phx.gen.channel Room
-  #
-  # See the [`Channels guide`](https://hexdocs.pm/phoenix/channels.html)
-  # for further details.
-
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -44,7 +33,6 @@ defmodule BillCrudWeb.UserSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
-  #     Elixir.BillCrudWeb.Endpoint.broadcast("user_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   @impl true
