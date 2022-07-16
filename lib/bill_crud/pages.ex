@@ -18,7 +18,9 @@ defmodule BillCrud.Pages do
 
   """
   def list_bills do
-    Repo.all(Bill)
+    Bill
+    |> order_by(:inserted_at)
+    |> Repo.all()
   end
 
   @doc """
