@@ -4,7 +4,6 @@
   <strong>Description:</strong>
   <%= @bill.description %>
   <div>
-    <span><%= link "Show", to: Routes.bill_path(BillCrudWeb.Endpoint, :show, @bill), data: ["turbo-frame": "_top"] %></span>
     <turbo-frame id={"bill-#{@bill.id}"}>
       <span><%= link "Edit", to: Routes.bill_path(BillCrudWeb.Endpoint, :edit, @bill) %></span>
     </turbo-frame>

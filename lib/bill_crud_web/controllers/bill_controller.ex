@@ -19,10 +19,11 @@ defmodule BillCrudWeb.BillController do
     case Pages.create_bill(bill_params) do
       {:ok, bill} ->
         if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
-          BillCrudWeb.Endpoint.update_stream("bills-index", BillCrudWeb.BillView, "show.turbo-html", bill: bill)
+          BillCrudWeb.Endpoint.update_stream("bills-index", BillCrudWeb.BillView, "show.turbo-html", bill: bill, stream_action: "replace", target: "bill-#{bill.id}-row" )
+          BillCrudWeb.Endpoint.update_stream("bills-index", BillCrudWeb.BillView, "show.turbo-html", bill: bill, stream_action: "append", target: "bills-index" )
           conn
           |> put_status(200)
-          |> PhoenixTurbo.ControllerHelper.render_turbo_stream(:form, conn: conn, changeset: Pages.change_bill(%Bill{}))
+          |> render(:form, conn: conn, changeset: Pages.change_bill(%Bill{}))
 
         else
           conn
@@ -55,7 +56,7 @@ defmodule BillCrudWeb.BillController do
       {:ok, bill} ->
         conn
         |> put_flash(:info, "Bill updated successfully.")
-        |> redirect(to: Routes.bill_path(conn, :show, bill))
+        |> render(:"index-row", bill: bill, stream_action: "replace", target: "bill-#{bill.id}-row")
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
