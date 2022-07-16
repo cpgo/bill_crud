@@ -6,11 +6,11 @@
   <% end %>
 
   <%= label f, :description %>
-  <%= text_input f, :description %>
+  <%= text_input f, :description, autocomplete: "off" %>
   <%= error_tag f, :description %>
 
   <%= label f, :value %>
-  <%= number_input f, :value %>
+  <%= number_input f, :value, autocomplete: "off" %>
   <%= error_tag f, :value %>
 
   <div>

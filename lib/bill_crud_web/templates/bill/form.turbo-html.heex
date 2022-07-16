@@ -1,0 +1,5 @@
+<turbo-stream action="replace" target="bill-form">
+  <template>
+    <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+  </template>
+</turbo-stream>

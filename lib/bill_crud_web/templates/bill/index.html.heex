@@ -1,7 +1,9 @@
 <h1>Listing Bills</h1>
 
+<%= turbo_stream_tag(@conn, "bills-index") %>
+
 <%= render("_index.html", %{bills: @bills, conn: @conn}) %>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
-
-<span><%= link "New Bill", to: Routes.bill_path(@conn, :new) %></span>
+<turbo-frame id="bill-form">
+  <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+</turbo-frame>
