@@ -1,12 +1,10 @@
 <div id={"bill-#{@bill.id}-row"} class="card">
+  <turbo-frame id={"bill-#{@bill.id}"}>
   <strong>Value:</strong>
   <%= @bill.value %>
   <strong>Description:</strong>
   <%= @bill.description %>
-  <div>
-    <turbo-frame id={"bill-#{@bill.id}"}>
-      <span><%= link "Edit", to: Routes.bill_path(BillCrudWeb.Endpoint, :edit, @bill) %></span>
-    </turbo-frame>
-    <span><%= link "Delete", to: Routes.bill_path(BillCrudWeb.Endpoint, :delete, @bill), method: :delete, data: [confirm: "Are you sure?", "turbo-action": "replace"] %></span>
-  </div>
+    <span><%= link "Edit", to: Routes.bill_path(BillCrudWeb.Endpoint, :edit, @bill) %></span>
+  <span><%= link "Delete", to: Routes.bill_path(BillCrudWeb.Endpoint, :delete, @bill), method: :delete, data: [confirm: "Are you sure?", "turbo-action": "replace"] %></span>
+  </turbo-frame>
 </div>

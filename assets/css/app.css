@@ -1,6 +1,10 @@
 /* This file is for your main application CSS */
 @import "./phoenix.css";
+@import "./main-grid.css";
 
+turbo-cable-stream-source {
+  display: none;
+}
 .card {
   border-radius: 2px;
   padding: 1rem;
