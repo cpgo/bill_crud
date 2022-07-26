@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :bill_crud, BillCrud.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "bill_crud_dev",
+  username: System.get_env("PGUSER") || "postgres",
+  password: System.get_env("postgres") || "postgres",
+  hostname: System.get_env("PGHOST") || "localhost",
+  database: System.get_env("PGDATABASE") || "bill_crud_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
@@ -19,7 +19,7 @@ config :bill_crud, BillCrud.Repo,
 config :bill_crud, BillCrudWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {0, 0, 0, 0}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
