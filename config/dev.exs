@@ -26,7 +26,8 @@ config :bill_crud, BillCrudWeb.Endpoint,
   secret_key_base: "dw2carUPagmd+9RP1Tal09NxTHnI3nmHKp9NG/d08RDm5hjG7DCJm2R0YAZQpggs",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

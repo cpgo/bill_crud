@@ -1,11 +1,23 @@
 .container {
   display: grid;
-  height: 80vh;
+  height: 100vh;
+  margin: auto;
   grid-template-columns: 100%;
   grid-template-rows: 80% 20%;
   grid-template-areas:
     "cards"
     "form";
+}
+
+
+@media (max-width: 800px) {
+  .container {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
+      grid-template-rows: 80% 20%;
+      grid-template-areas: "cards" "form";
+  }
 }
 
 #bills-index {
@@ -14,6 +26,18 @@
   grid-template-columns: 33% 33% 33%;
   grid-auto-rows: minmax(40%, auto);
   overflow: auto;
+  gap: 5px;
+}
+
+@media (max-width: 800px) {
+  #bills-index {
+    grid-area: cards;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(40%, auto);
+    overflow: auto;
+    gap: 5px;
+    }
 }
 
 .card {
@@ -22,4 +46,5 @@
 
 #bill-form {
   grid-area: form;
+  margin-top: 10vh;
 }
