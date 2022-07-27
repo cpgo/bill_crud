@@ -92,6 +92,22 @@ defmodule BillCrud.Pages do
   end
 
   @doc """
+  Deletes all.
+
+  ## Examples
+
+      iex> delete_bill(bill)
+      {:ok, %Bill{}}
+
+      iex> delete_bill(bill)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_all_bills() do
+    Repo.delete_all(Bill)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking bill changes.
 
   ## Examples
