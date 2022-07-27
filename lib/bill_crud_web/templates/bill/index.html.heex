@@ -1,11 +1,11 @@
 <%= turbo_stream_tag(@conn, "bills-index") %>
 
-<turbo-frame id="bills-index">
+<turbo-frame id="bills-index" class="grid grid-rows-2 grid-cols-2">
   <%= for bill <- @bills do %>
     <%= render("_row.html", %{bill: bill, conn: @conn}) %>
   <% end %>
 </turbo-frame>
 
-<turbo-frame id="bill-form" class="form">
+<turbo-frame id="bill-form" class="fixed bottom-0 mx-auto container">
   <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
 </turbo-frame>
