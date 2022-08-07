@@ -11,7 +11,7 @@ defmodule BillCrudWeb.ErrorHelpers do
   def error_tag(form, field) do
     Enum.map(Keyword.get_values(form.errors, field), fn error ->
       content_tag(:span, translate_error(error),
-        class: "invalid-feedback",
+        class: "invalid-feedback mt-2 text-sm text-red-600 dark:text-red-500",
         phx_feedback_for: input_name(form, field)
       )
     end)

@@ -6,6 +6,6 @@
   <% end %>
 </turbo-frame>
 
-<turbo-frame id="bill-form" class="container fixed bottom-0 mx-auto bg-gray-100">
+<turbo-frame id="bill-form" class="container fixed bottom-0 mx-auto bg-gray-200 mt-7">
   <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
 </turbo-frame>
