@@ -19,12 +19,17 @@ ARG DEBIAN_VERSION=bullseye-20210902-slim
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 
+FROM node:lts-alpine3.16 as node_builder
+
+COPY assets /assets
+WORKDIR /assets
+RUN npm ci
+
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
 RUN apt-get update -y && apt-get install -y build-essential git curl \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && apt install nodejs
 
 # prepare build dir
 WORKDIR /app
@@ -51,8 +56,7 @@ COPY priv priv
 
 COPY lib lib
 
-COPY assets assets
-RUN npm ci --prefix assets
+COPY --from=node_builder --chown=nobody:root /assets /app/assets
 
 # compile assets
 RUN mix assets.deploy
