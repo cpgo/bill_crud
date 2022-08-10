@@ -1,3 +1,5 @@
 <.stream_tag action="replace", target="bill-form">
-  <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+  <turbo-frame id="bill-form" class="container fixed bottom-0 mx-auto bg-indigo-100 mt-7">
+    <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+  </turbo-frame>
 </.stream_tag>

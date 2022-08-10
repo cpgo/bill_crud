@@ -53,6 +53,7 @@ defmodule BillCrudWeb.BillController do
 
     case Pages.update_bill(bill, bill_params) do
       {:ok, bill} ->
+        BillCrudWeb.Endpoint.update_stream("bills-index", BillCrudWeb.BillView, "index-row.turbo-html", bill: bill, stream_action: "replace", target: "bill-#{bill.id}-row" )
         conn
         |> put_flash(:info, "Bill updated successfully.")
         |> render(:"index-row", bill: bill, stream_action: "replace", target: "bill-#{bill.id}-row")
