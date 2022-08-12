@@ -15,7 +15,7 @@ CURRENT_VERSION=`git describe --abbrev=0 --tags 2>/dev/null`
 
 if [[ $CURRENT_VERSION == '' ]]
 then
-  CURRENT_VERSION='0.0.1'
+  CURRENT_VERSION='1.0.0'
 fi
 echo "Current Version: $CURRENT_VERSION"
 
@@ -54,6 +54,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 #only tag if no tag already
 #to publish, need to be logged in to npm, and with clean working directory: `npm login; git stash`
 if [ -z "$NEEDS_TAG" ]; then
+  git tag $NEW_TAG
   echo "Tagged with $NEW_TAG"
   git push --tags
   git push
