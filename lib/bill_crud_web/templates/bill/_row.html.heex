@@ -12,6 +12,6 @@
     </div>
 
   <span><%= link "Edit", to: Routes.bill_path(BillCrudWeb.Endpoint, :edit, @bill), class: "px-2 py-1 text-indigo-100 no-underline bg-indigo-500 rounded hover:bg-indigo-600 hover:underline hover:text-indigo-200" %></span>
-  <span><%= link "Delete", to: Routes.bill_path(BillCrudWeb.Endpoint, :delete, @bill), class: "px-2 py-1 text-red-100 no-underline bg-red-500 rounded hover:bg-red-600 hover:underline hover:text-red-200", method: :delete, data: [confirm: "Are you sure?", "turbo-action": "replace"] %></span>
+  <span><%= link "Delete", to: Routes.bill_path(BillCrudWeb.Endpoint, :delete, @bill), class: "px-2 py-1 text-red-100 no-underline bg-red-500 rounded hover:bg-red-600 hover:underline hover:text-red-200", data: [confirm: "Are you sure?", "turbo-method": "delete"] %></span>
   </turbo-frame>
 </div>

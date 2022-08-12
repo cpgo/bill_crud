@@ -19,11 +19,18 @@ defmodule BillCrudWeb.BillController do
     case Pages.create_bill(bill_params) do
       {:ok, bill} ->
         if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
-          BillCrudWeb.Endpoint.update_stream("bills-index", BillCrudWeb.BillView, "index-row.turbo-html", bill: bill, stream_action: "append", target: "bills-index" )
+          BillCrudWeb.Endpoint.update_stream(
+            "bills-index",
+            BillCrudWeb.BillView,
+            "index-row.turbo-html",
+            bill: bill,
+            stream_action: "append",
+            target: "bills-index"
+          )
+
           conn
           |> put_status(200)
           |> render(:form, conn: conn, changeset: Pages.change_bill(%Bill{}))
-
         else
           conn
           |> put_flash(:info, "Bill created successfully.")
@@ -53,10 +60,22 @@ defmodule BillCrudWeb.BillController do
 
     case Pages.update_bill(bill, bill_params) do
       {:ok, bill} ->
-        BillCrudWeb.Endpoint.update_stream("bills-index", BillCrudWeb.BillView, "index-row.turbo-html", bill: bill, stream_action: "replace", target: "bill-#{bill.id}-row" )
+        BillCrudWeb.Endpoint.update_stream(
+          "bills-index",
+          BillCrudWeb.BillView,
+          "index-row.turbo-html",
+          bill: bill,
+          stream_action: "replace",
+          target: "bill-#{bill.id}-row"
+        )
+
         conn
         |> put_flash(:info, "Bill updated successfully.")
-        |> render(:"index-row", bill: bill, stream_action: "replace", target: "bill-#{bill.id}-row")
+        |> render(:"index-row",
+          bill: bill,
+          stream_action: "replace",
+          target: "bill-#{bill.id}-row"
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         conn
@@ -67,10 +86,25 @@ defmodule BillCrudWeb.BillController do
 
   def delete(conn, %{"id" => id}) do
     bill = Pages.get_bill!(id)
-    {:ok, _bill} = Pages.delete_bill(bill)
 
-    conn
-    |> put_flash(:info, "Bill deleted successfully.")
-    |> redirect(to: Routes.bill_path(conn, :index))
+    if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
+      BillCrudWeb.Endpoint.update_stream(
+        "bills-index",
+        BillCrudWeb.BillView,
+        "index-row.turbo-html",
+        bill: bill,
+        stream_action: "remove",
+        target: "bill-#{bill.id}-row"
+      )
+
+      conn
+      |> put_status(200)
+      |> render(:form, conn: conn, changeset: Pages.change_bill(%Bill{}))
+    end
+
+    {:ok, _bill} =
+      Pages.delete_bill(bill)
+      |> put_flash(:info, "Bill deleted successfully.")
+      |> redirect(to: Routes.bill_path(conn, :index))
   end
 end
