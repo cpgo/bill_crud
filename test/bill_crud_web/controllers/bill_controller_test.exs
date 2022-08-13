@@ -10,14 +10,14 @@ defmodule BillCrudWeb.BillControllerTest do
   describe "index" do
     test "lists all bills", %{conn: conn} do
       conn = get(conn, Routes.bill_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Bills"
+      assert html_response(conn, 200) =~ "index?"
     end
   end
 
   describe "new bill" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.bill_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Bill"
+      assert html_response(conn, 200) =~ "Description"
     end
   end
 
@@ -34,7 +34,7 @@ defmodule BillCrudWeb.BillControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.bill_path(conn, :create), bill: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Bill"
+      assert html_response(conn, 422) =~ "can&#39;t be blank"
     end
   end
 
@@ -52,7 +52,7 @@ defmodule BillCrudWeb.BillControllerTest do
 
     test "redirects when data is valid", %{conn: conn, bill: bill} do
       conn = put(conn, Routes.bill_path(conn, :update, bill), bill: @update_attrs)
-      assert redirected_to(conn) == Routes.bill_path(conn, :show, bill)
+      assert redirected_to(conn) == Routes.bill_path(conn, :index)
 
       conn = get(conn, Routes.bill_path(conn, :show, bill))
       assert html_response(conn, 200) =~ "some updated description"
@@ -60,7 +60,7 @@ defmodule BillCrudWeb.BillControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, bill: bill} do
       conn = put(conn, Routes.bill_path(conn, :update, bill), bill: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Bill"
+      assert html_response(conn, 422) =~ "Edit Bill"
     end
   end
 
