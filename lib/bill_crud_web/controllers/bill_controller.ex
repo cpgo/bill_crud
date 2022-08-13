@@ -50,13 +50,6 @@ defmodule BillCrudWeb.BillController do
   end
 
   def edit(conn, %{"id" => id}) do
-    # rr = BillCrudWeb.Components.TurboStreamComponent.stream_tag(%{action: "remove", target: "bills-index", inner_block: %{inner_block: fn(_,_) -> nil end}}) |> Phoenix.HTML.Safe.to_iodata() |> IO.iodata_to_binary()
-    # rendered_show = BillCrudWeb.BillView.render("_row.html", %{conn: BillCrudWeb.Endpoint, bill: %BillCrud.Pages.Bill{id: :rand.uniform(999), description: "shiet", value: 8888}})
-    # rr = BillCrudWeb.RenderHelper.render_inline_stream("append", "bills-index", rendered_show)
-    # conn
-    # |> put_resp_content_type("text/vnd.turbo-stream.html")
-    # |> text(rr)
-
     bill = Pages.get_bill!(id)
     changeset = Pages.change_bill(bill)
     render(conn, :edit, bill: bill, changeset: changeset)
