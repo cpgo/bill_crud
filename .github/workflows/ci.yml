@@ -3,8 +3,8 @@ name: CI
 on: push
 
 jobs:
-  bless:
-    name: Bless
+  test:
+    name: Test
     runs-on: ubuntu-latest
     services:
       db:
