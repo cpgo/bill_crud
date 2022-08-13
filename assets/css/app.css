@@ -4,6 +4,26 @@
 @import "tailwindcss/forms";
 @import "./main-grid.css";
 
+
+@keyframes resize {
+  to {
+    grid-template-columns: 1fr 2fr 1fr;
+  }
+}
+
 turbo-cable-stream-source {
   display: none;
+}
+
+@keyframes purple-fade {
+  0% {
+    background: rgb(240, 232, 255);
+  }
+  100% {
+    background: none;
+  }
+}
+
+.bill-wrapper {
+  animation: purple-fade 0.4s ease-in 1;
 }
