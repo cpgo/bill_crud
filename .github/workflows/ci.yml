@@ -9,20 +9,12 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        elixir: [1.14.0]
-        otp: [25.0.2]
-
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Setup elixir
-      uses: actions/setup-elixir@v1
-      with:
-        elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
-        otp-version: ${{ matrix.otp }} # Define the OTP version [required]
-
+      - uses: actions/checkout@v2
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: '25.0.2'
+          elixir-version: '1.14'
     - name: Retrieve Mix Dependencies Cache
       uses: actions/cache@v1
       id: mix-cache #id to use in retrieve action
