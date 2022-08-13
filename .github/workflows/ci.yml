@@ -10,17 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: erlef/setup-beam@v1
-        with:
-          otp-version: '25.0.2'
-          elixir-version: '1.14'
+    - uses: actions/checkout@v2
+
+    - name: Setup elixir
+      uses: actions/setup-elixir@v1
+      with:
+        elixir-version: '1.14' # Define the elixir version [required]
+        otp-version: '25.0.2' # Define the OTP version [required]
+
     - name: Retrieve Mix Dependencies Cache
       uses: actions/cache@v1
       id: mix-cache #id to use in retrieve action
       with:
         path: deps
-        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+        key: ${{ runner.os }}-25.0.2-1.14}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
 
     - name: Install Mix Dependencies
       if: steps.mix-cache.outputs.cache-hit != 'true'
