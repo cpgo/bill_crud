@@ -1,6 +1,7 @@
 defmodule BillCrudWeb.RenderHelper do
   import Plug.Conn
   import Phoenix.Controller
+  import PhoenixTurbo, only: [dom_id: 1]
 
   @doc """
   Renders a turbo-stream tag with specified action and target.
@@ -37,5 +38,20 @@ defmodule BillCrudWeb.RenderHelper do
     conn
     |> put_resp_content_type("text/vnd.turbo-stream.html")
     |> text(rendered)
+  end
+
+  def broadcast_inline_stream(action, target, stream, rendered_template \\ nil) do
+    rendered =
+      BillCrudWeb.Components.TurboStreamComponent.stream_tag(%{
+        action: action,
+        target: target,
+        inner_block: %{inner_block: fn _, _ -> rendered_template end}
+      })
+      |> Phoenix.HTML.Safe.to_iodata()
+      |> IO.iodata_to_binary()
+
+    BillCrudWeb.Endpoint.broadcast("turbo-streams:#{dom_id(stream)}", "update_stream", %{
+      data: rendered
+    })
   end
 end
