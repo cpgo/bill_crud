@@ -49,7 +49,8 @@ defmodule BillCrud.PagesTest do
 
     test "delete_bill/1 deletes the bill" do
       bill = bill_fixture()
-      assert {:ok, %Bill{}} = Pages.delete_bill(bill)
+      id = bill.id
+      assert {:ok, ^id} = Pages.delete_bill(bill)
       assert_raise Ecto.NoResultsError, fn -> Pages.get_bill!(bill.id) end
     end
 

@@ -73,7 +73,7 @@ defmodule BillCrudWeb.BillController do
 
   def delete(conn, %{"id" => id}) do
     case Pages.delete_bill(id, :stream) do
-      {:ok, nil} ->
+      {:ok, ^id} ->
         if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
           conn
           |> put_status(200)

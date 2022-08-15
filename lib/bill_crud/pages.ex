@@ -86,7 +86,7 @@ defmodule BillCrud.Pages do
           stream_action: "replace",
           target: "bill-#{bill.id}-row"
         )
-
+        {:ok, bill}
       {status, bill} ->
         {status, bill}
     end
@@ -104,6 +104,11 @@ defmodule BillCrud.Pages do
       {:error, nil}
 
   """
+
+  def delete_bill(%Bill{id: id}) do
+    delete_bill(id)
+  end
+
   def delete_bill(id) do
     case from(x in Bill, where: x.id == ^id) |> Repo.delete_all() do
       {1, nil} -> {:ok, id}
