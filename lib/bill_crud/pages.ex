@@ -75,6 +75,23 @@ defmodule BillCrud.Pages do
     |> Repo.update()
   end
 
+  def update_bill(%Bill{} = bill, attrs, :stream) do
+    case update_bill(bill, attrs) do
+      {:ok, bill} ->
+        BillCrudWeb.Endpoint.update_stream(
+          "bills-index",
+          BillCrudWeb.BillView,
+          "index-row.turbo-html",
+          bill: bill,
+          stream_action: "replace",
+          target: "bill-#{bill.id}-row"
+        )
+        {:ok, bill}
+      {status, bill} ->
+        {status, bill}
+    end
+  end
+
   @doc """
   Deletes a bill.
 
@@ -84,11 +101,26 @@ defmodule BillCrud.Pages do
       {:ok, %Bill{}}
 
       iex> delete_bill(bill)
-      {:error, %Ecto.Changeset{}}
+      {:error, nil}
 
   """
-  def delete_bill(%Bill{} = bill) do
-    Repo.delete(bill)
+
+  def delete_bill(%Bill{id: id}) do
+    delete_bill(id)
+  end
+
+  def delete_bill(id) do
+    case from(x in Bill, where: x.id == ^id) |> Repo.delete_all() do
+      {1, nil} -> {:ok, id}
+      _ -> {:error, nil}
+    end
+  end
+
+  def delete_bill(id, :stream) do
+    # TODO handle error
+    BillCrudWeb.RenderHelper.broadcast_inline_stream("remove", "bill-#{id}-row", "bills-index")
+
+    delete_bill(id)
   end
 
   @doc """

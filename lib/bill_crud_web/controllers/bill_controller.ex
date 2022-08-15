@@ -7,7 +7,7 @@ defmodule BillCrudWeb.BillController do
   def index(conn, _params) do
     bills = Pages.list_bills()
     changeset = Pages.change_bill(%Bill{})
-    render(conn, :index, bills: bills, changeset: changeset)
+    render(conn, "index.html", bills: bills, changeset: changeset)
   end
 
   def new(conn, _params) do
@@ -58,17 +58,8 @@ defmodule BillCrudWeb.BillController do
   def update(conn, %{"id" => id, "bill" => bill_params}) do
     bill = Pages.get_bill!(id)
 
-    case Pages.update_bill(bill, bill_params) do
-      {:ok, bill} ->
-        BillCrudWeb.Endpoint.update_stream(
-          "bills-index",
-          BillCrudWeb.BillView,
-          "index-row.turbo-html",
-          bill: bill,
-          stream_action: "replace",
-          target: "bill-#{bill.id}-row"
-        )
-
+    case Pages.update_bill(bill, bill_params, :stream) do
+      {:ok, _bill} ->
         conn
         |> put_flash(:info, "Bill updated successfully.")
         |> redirect(to: Routes.bill_path(conn, :index))
@@ -81,29 +72,17 @@ defmodule BillCrudWeb.BillController do
   end
 
   def delete(conn, %{"id" => id}) do
-    bill = Pages.get_bill!(id)
-
-    if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
-      Pages.delete_bill(bill)
-
-      BillCrudWeb.Endpoint.update_stream(
-        "bills-index",
-        BillCrudWeb.BillView,
-        "index-row.turbo-html",
-        bill: bill,
-        stream_action: "remove",
-        target: "bill-#{bill.id}-row"
-      )
-
-      conn
-      |> put_status(200)
-      |> render(:form, conn: conn, changeset: Pages.change_bill(%Bill{}))
-    else
-      {:ok, _bill} = Pages.delete_bill(bill)
-
-      conn
-      |> put_flash(:info, "Bill deleted successfully.")
-      |> redirect(to: Routes.bill_path(conn, :index))
+    case Pages.delete_bill(id, :stream) do
+      {:ok, ^id} ->
+        if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
+          conn
+          |> put_status(200)
+          |> render(:form, conn: conn, changeset: Pages.change_bill(%Bill{}))
+        else
+          conn
+          |> put_flash(:info, "Bill deleted successfully.")
+          |> redirect(to: Routes.bill_path(conn, :index))
+        end
     end
   end
 end
