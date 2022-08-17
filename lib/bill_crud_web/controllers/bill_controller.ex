@@ -7,7 +7,8 @@ defmodule BillCrudWeb.BillController do
   def index(conn, _params) do
     bills = Pages.list_bills()
     changeset = Pages.change_bill(%Bill{})
-    render(conn, "index.html", bills: bills, changeset: changeset)
+    total = Pages.total()
+    render(conn, "index.html", bills: bills, changeset: changeset, total: total)
   end
 
   def new(conn, _params) do

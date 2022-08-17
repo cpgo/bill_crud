@@ -52,9 +52,12 @@ defmodule BillCrud.Pages do
 
   """
   def create_bill(attrs \\ %{}) do
-    %Bill{}
+    bill = %Bill{}
     |> Bill.changeset(attrs)
     |> Repo.insert()
+
+    broadcast_total()
+    bill
   end
 
   @doc """
@@ -86,6 +89,7 @@ defmodule BillCrud.Pages do
           stream_action: "replace",
           target: "bill-#{bill.id}-row"
         )
+        broadcast_total()
         {:ok, bill}
       {status, bill} ->
         {status, bill}
@@ -120,7 +124,9 @@ defmodule BillCrud.Pages do
     # TODO handle error
     BillCrudWeb.RenderHelper.broadcast_inline_stream("remove", "bill-#{id}-row", "bills-index")
 
-    delete_bill(id)
+    deleted_bill = delete_bill(id)
+    broadcast_total()
+    deleted_bill
   end
 
   @doc """
@@ -137,6 +143,15 @@ defmodule BillCrud.Pages do
   """
   def delete_all_bills() do
     Repo.delete_all(Bill)
+  end
+
+  def total() do
+    Repo.one(from b in Bill, select: sum(b.value))
+  end
+
+  def broadcast_total() do
+    rendered_total = BillCrudWeb.BillView.render("summary.html", %{total: total()})
+    BillCrudWeb.RenderHelper.broadcast_inline_stream("replace", "summary", "bills-index", rendered_total)
   end
 
   @doc """
