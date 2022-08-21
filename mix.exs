@@ -49,7 +49,7 @@ defmodule BillCrud.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:phoenix_turbo, git: "https://github.com/piecehealth/phoenix_turbo.git", branch: "main"},
+      {:phoenix_turbo, git: "https://github.com/cpgo/phoenix_turbo.git", branch: "main"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
