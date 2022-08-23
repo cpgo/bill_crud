@@ -74,12 +74,12 @@ defmodule BillCrud.Pages do
 
   """
   def update_bill(%Bill{} = bill, attrs) do
-    bill
+    result = bill
     |> Bill.changeset(attrs)
     |> Repo.update()
 
     broadcast_total()
-    bill
+    result
   end
 
   def update_bill(%Bill{} = bill, attrs, :stream) do

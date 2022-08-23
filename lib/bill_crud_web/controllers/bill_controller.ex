@@ -52,7 +52,7 @@ defmodule BillCrudWeb.BillController do
   def update(conn, %{"id" => id, "bill" => bill_params}) do
     bill = Pages.get_bill!(id)
 
-    case Pages.update_bill(bill, bill_params) do
+    case Pages.update_bill(bill, bill_params, :stream) do
       {:ok, bill} ->
         conn
         |> put_flash(:info, "Bills updated successfully.")
@@ -64,8 +64,7 @@ defmodule BillCrudWeb.BillController do
   end
 
   def delete(conn, %{"id" => id}) do
-    bill = Pages.get_bill!(id)
-    {:ok, _bill} = Pages.delete_bill(bill)
+    {:ok, _bill} = Pages.delete_bill(id, :stream)
 
     conn
     |> put_flash(:info, "Bills deleted successfully.")
