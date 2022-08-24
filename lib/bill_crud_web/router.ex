@@ -8,7 +8,8 @@ defmodule BillCrudWeb.Router do
     plug :put_root_layout, {BillCrudWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug PhoenixTurbo.HandleTurboPlug
+    # plug PhoenixTurbo.HandleTurboPlug
+    plug :handle_turbo_frame
   end
 
   pipeline :api do
