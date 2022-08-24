@@ -19,10 +19,7 @@ defmodule BillCrudWeb.BillController do
 
   def create(conn, %{"bill" => bill_params}) do
     case Pages.create_bill(bill_params) do
-      {:ok, bill} ->
-        conn = conn
-        |> put_flash(:info, "Bills created successfully.")
-
+      {:ok, _bill} ->
         if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
           conn
           |> put_status(200)
@@ -30,6 +27,7 @@ defmodule BillCrudWeb.BillController do
         else
 
           conn
+          |> put_flash(:info, "Bills created successfully.")
           |> redirect(to: Routes.bill_path(conn, :index))
         end
 
