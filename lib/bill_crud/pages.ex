@@ -169,6 +169,10 @@ defmodule BillCrud.Pages do
     )
   end
 
+  def broadcast_row({:error, changeset}) do
+    changeset
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking bill changes.
 

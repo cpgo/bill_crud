@@ -19,7 +19,7 @@ defmodule BillCrudWeb.BillController do
 
   def create(conn, %{"bill" => bill_params}) do
     case Pages.create_bill(bill_params) do
-      {:ok, bill} ->
+      {:ok, _bill} ->
         conn = conn
         |> put_flash(:info, "Bills created successfully.")
 
@@ -34,7 +34,9 @@ defmodule BillCrudWeb.BillController do
         end
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_status(422)
+        |> render( "new.html", changeset: changeset)
     end
   end
 
@@ -59,7 +61,9 @@ defmodule BillCrudWeb.BillController do
         |> redirect(to: Routes.bill_path(conn, :show, bill))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", bill: bill, changeset: changeset)
+        conn
+        |> put_status(422)
+        |> render("edit.html", bill: bill, changeset: changeset)
     end
   end
 
