@@ -30,6 +30,7 @@ defmodule BillCrudWeb.BillController do
         else
 
           conn
+          |> put_flash(:info, "Bills created successfully.")
           |> redirect(to: Routes.bill_path(conn, :index))
         end
 
