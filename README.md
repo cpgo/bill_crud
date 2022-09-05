@@ -5,6 +5,8 @@ No need for extra setup for basic form submition
 Submit is hijacked and if the action returns a 303 (redirect) turbo will follow that redirect and replace the whole body
 
 
+
+
 -----
 Crappy idea on how to glue togeter views/components to dynamicaly render and concat streams
 ```
