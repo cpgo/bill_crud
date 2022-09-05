@@ -160,6 +160,10 @@ defmodule BillCrud.Pages do
     BillCrudWeb.RenderHelper.broadcast_inline_stream("replace", "summary", "bills-index", rendered_total)
   end
 
+  def broadcast_row({:error, changeset}) do
+    changeset
+  end
+
   def broadcast_row(bill) do
     BillCrudWeb.Endpoint.update_stream(
       "bills-index",
@@ -169,10 +173,6 @@ defmodule BillCrud.Pages do
       stream_action: "append",
       target: "bills-index"
     )
-  end
-
-  def broadcast_row({:error, changeset}) do
-    changeset
   end
 
   @doc """
