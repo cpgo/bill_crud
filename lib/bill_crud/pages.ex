@@ -52,12 +52,15 @@ defmodule BillCrud.Pages do
 
   """
   def create_bill(attrs \\ %{}) do
-    bill = %Bill{}
-    |> Bill.changeset(attrs)
-    |> Repo.insert()
-
-    broadcast_total()
-    bill
+    changeset = Bill.changeset(%Bill{}, attrs)
+    with {:ok, bill} <- Repo.insert(changeset) do
+      broadcast_total()
+      broadcast_row(bill)
+      {:ok, bill}
+    else
+      {:error, changeset} ->
+        {:error, changeset}
+    end
   end
 
   @doc """
@@ -73,9 +76,12 @@ defmodule BillCrud.Pages do
 
   """
   def update_bill(%Bill{} = bill, attrs) do
-    bill
+    result = bill
     |> Bill.changeset(attrs)
     |> Repo.update()
+
+    broadcast_total()
+    result
   end
 
   def update_bill(%Bill{} = bill, attrs, :stream) do
@@ -152,6 +158,21 @@ defmodule BillCrud.Pages do
   def broadcast_total() do
     rendered_total = BillCrudWeb.BillView.render("summary.html", %{total: total()})
     BillCrudWeb.RenderHelper.broadcast_inline_stream("replace", "summary", "bills-index", rendered_total)
+  end
+
+  def broadcast_row({:error, changeset}) do
+    changeset
+  end
+
+  def broadcast_row(bill) do
+    BillCrudWeb.Endpoint.update_stream(
+      "bills-index",
+      BillCrudWeb.BillView,
+      "index-row.turbo-html",
+      bill: bill,
+      stream_action: "append",
+      target: "bills-index"
+    )
   end
 
   @doc """

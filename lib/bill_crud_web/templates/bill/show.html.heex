@@ -1,18 +1,6 @@
 <h1>Show Bill</h1>
 
-<ul>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @bill.description %>
-  </li>
-
-  <li>
-    <strong>Value:</strong>
-    <%= @bill.value %>
-  </li>
-
-</ul>
+<%= render("_row.html", %{bill: @bill}) %>
 
 <span><%= link "Edit", to: Routes.bill_path(@conn, :edit, @bill) %></span> |
 <span><%= link "Back", to: Routes.bill_path(@conn, :index) %></span>
