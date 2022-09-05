@@ -33,31 +33,24 @@ jobs:
         otp-version: ${{ env.OTP_VERSION }}
         experimental-otp: true
 
-    - name: Restore the deps cache
-      uses: actions/cache@v1
-      id: deps-cache
+    - name: Retrieve Cached Dependencies
+      uses: actions/cache@v2
+      id: mix-cache
       with:
-        path: deps
-        key: ${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ env.MIX_ENV }}-deps-mixlockhash-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
-        restore-keys: |
-          ${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ env.MIX_ENV }}-deps-
-    - name: Restore the _build cache
-      uses: actions/cache@v1
-      id: build-cache
-      with:
-        path: _build
-        key: ${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ env.MIX_ENV }}-build-mixlockhash-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
-        restore-keys: |
-          ${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ env.MIX_ENV }}-build-
-    - name: Fetch mix dependencies
-      if: steps.deps-cache.outputs.cache-hit != 'true'
+        path: |
+          deps
+          _build
+          priv/plts
+        key: ${{ runner.os }}-${{ env.OTP_VERSION }}-${{ env.ELIXIR_VERSION }}-${{ hashFiles('mix.lock') }}
+
+    - name: Install Dependencies
+      if: steps.mix-cache.outputs.cache-hit != 'true'
       run: |
+        mkdir -p priv/plts
         mix local.rebar --force
         mix local.hex --force
         mix deps.get
-    - name: Compile dependencies
-      if: steps.deps-cache.outputs.cache-hit != 'true'
-      run: mix deps.compile
+        mix deps.compile
 
     - name: Compile
       run: mix compile --warnings-as-errors --force
