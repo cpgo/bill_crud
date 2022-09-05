@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git fetch --tags --force
+
 VERSION=""
 
 #get parameters
