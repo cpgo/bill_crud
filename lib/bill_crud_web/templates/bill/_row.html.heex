@@ -11,7 +11,7 @@
       <%= label :bill, :value, class: "peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-indigo-800 peer-focus:dark:text-indigo-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" %>
     </div>
 
-  <span><%= link "Edit", to: Routes.bill_path(BillCrudWeb.Endpoint, :edit, @bill), class: "px-2 py-1 text-indigo-100 no-underline bg-indigo-500 rounded hover:bg-indigo-600 hover:underline hover:text-indigo-200" %></span>
-  <span><%= link "Delete", to: Routes.bill_path(BillCrudWeb.Endpoint, :delete, @bill), class: "px-2 py-1 text-red-100 no-underline bg-red-500 rounded hover:bg-red-600 hover:underline hover:text-red-200", data: [confirm: "Are you sure?", "turbo-method": "delete"] %></span>
+  <span><%= link "Edit", to: Routes.event_bill_path(BillCrudWeb.Endpoint, :edit, @bill, @bill.event_id), class: "px-2 py-1 text-indigo-100 no-underline bg-indigo-500 rounded hover:bg-indigo-600 hover:underline hover:text-indigo-200" %></span>
+  <span><%= link "Delete", to: Routes.event_bill_path(BillCrudWeb.Endpoint, :delete, @bill, @bill.event_id), class: "px-2 py-1 text-red-100 no-underline bg-red-500 rounded hover:bg-red-600 hover:underline hover:text-red-200", data: [confirm: "Are you sure?", "turbo-method": "delete"] %></span>
   </turbo-frame>
 </div>

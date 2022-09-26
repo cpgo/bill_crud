@@ -2,5 +2,5 @@
 
 <%= render("_row.html", %{bill: @bill}) %>
 
-<span><%= link "Edit", to: Routes.bill_path(@conn, :edit, @bill) %></span> |
-<span><%= link "Back", to: Routes.bill_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.event_bill_path(@conn, :edit, @event_id, @bill) %></span> |
+<span><%= link "Back", to: Routes.event_bill_path(@conn, :index, @event_id) %></span>
