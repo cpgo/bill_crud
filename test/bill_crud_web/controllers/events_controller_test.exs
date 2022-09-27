@@ -29,7 +29,7 @@ defmodule BillCrudWeb.EventsControllerTest do
       assert redirected_to(conn) == Routes.event_path(conn, :show, id)
 
       conn = get(conn, Routes.event_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Events"
+      assert html_response(conn, 302) =~ "redirected"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -52,10 +52,10 @@ defmodule BillCrudWeb.EventsControllerTest do
 
     test "redirects when data is valid", %{conn: conn, event: event} do
       conn = put(conn, Routes.event_path(conn, :update, event), events: @update_attrs)
-      assert redirected_to(conn) == Routes.event_bill_path(conn, :index, event.id)
+      assert redirected_to(conn) == Routes.event_path(conn, :show, event)
 
-      conn = get(conn, Routes.event_path(conn, :show, event))
-      assert html_response(conn, 200) =~ "some updated name"
+      conn = get(conn, Routes.event_bill_path(conn, :index, event))
+      assert html_response(conn, 200) =~ "Events updated successfully"
     end
 
     test "renders errors when data is invalid", %{conn: conn, event: event} do
