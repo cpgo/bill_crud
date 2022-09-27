@@ -22,6 +22,7 @@ defmodule BillCrud.PagesTest do
 
     test "create_bill/1 with valid data creates a bill" do
       event = event_fixture()
+      # test cache
       valid_attrs = %{description: "some description", value: 42, event_id: event.id}
 
       assert {:ok, %Bill{} = bill} = Pages.create_bill(valid_attrs)
