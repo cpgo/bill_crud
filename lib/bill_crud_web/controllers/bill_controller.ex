@@ -5,7 +5,7 @@ defmodule BillCrudWeb.BillController do
   alias BillCrud.Pages.Bill
 
   def index(conn, %{"event_id" => event_id}) do
-    bills = Pages.list_bills()
+    bills = Pages.list_bills(event_id)
     changeset = Pages.change_bill(%Bill{}, %{event_id: event_id})
     total = Pages.total()
     render(conn, "index.html",

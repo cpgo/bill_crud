@@ -17,9 +17,20 @@ defmodule BillCrud.Pages do
       [%Bill{}, ...]
 
   """
-  def list_bills do
+
+  def list_bills_base do
     Bill
     |> order_by(:inserted_at)
+  end
+
+  def list_bills do
+    list_bills_base()
+    |> Repo.all()
+  end
+
+  def list_bills(event_id) do
+    list_bills_base()
+    |> where(event_id: ^event_id)
     |> Repo.all()
   end
 
@@ -53,6 +64,7 @@ defmodule BillCrud.Pages do
   """
   def create_bill(attrs \\ %{}) do
     changeset = Bill.changeset(%Bill{}, attrs)
+
     with {:ok, bill} <- Repo.insert(changeset) do
       broadcast_total()
       broadcast_row(bill)
@@ -76,9 +88,10 @@ defmodule BillCrud.Pages do
 
   """
   def update_bill(%Bill{} = bill, attrs) do
-    result = bill
-    |> Bill.changeset(attrs)
-    |> Repo.update()
+    result =
+      bill
+      |> Bill.changeset(attrs)
+      |> Repo.update()
 
     broadcast_total()
     result
@@ -95,8 +108,10 @@ defmodule BillCrud.Pages do
           stream_action: "replace",
           target: "bill-#{bill.id}-row"
         )
+
         broadcast_total()
         {:ok, bill}
+
       {status, bill} ->
         {status, bill}
     end
@@ -157,7 +172,13 @@ defmodule BillCrud.Pages do
 
   def broadcast_total() do
     rendered_total = BillCrudWeb.BillView.render("summary.html", %{total: total()})
-    BillCrudWeb.RenderHelper.broadcast_inline_stream("replace", "summary", "bills-index", rendered_total)
+
+    BillCrudWeb.RenderHelper.broadcast_inline_stream(
+      "replace",
+      "summary",
+      "bills-index",
+      rendered_total
+    )
   end
 
   def broadcast_row({:error, changeset}) do
