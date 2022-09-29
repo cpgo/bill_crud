@@ -20,7 +20,7 @@ defmodule BillCrud.MixProject do
   def application do
     [
       mod: {BillCrud.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -51,7 +51,8 @@ defmodule BillCrud.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:phoenix_turbo, git: "https://github.com/cpgo/phoenix_turbo.git", branch: "dev"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
-      {:money, "~> 1.11"}
+      {:money, "~> 1.11"},
+      {:ecto_psql_extras, "~> 0.6"}
     ]
   end
 
