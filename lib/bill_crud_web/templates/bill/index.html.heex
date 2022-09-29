@@ -3,10 +3,10 @@
 
 <turbo-frame id="bills-index" class="grid grid-cols-2 gap-5">
   <%= for bill <- @bills do %>
-    <%= render("_row.html", %{bill: bill, conn: @conn}) %>
+    <%= render("_row.html", %{bill: bill, conn: @conn, event_id: @event_id}) %>
   <% end %>
 </turbo-frame>
 
 <turbo-frame id="bill-form" class="container fixed bottom-0 mx-auto bg-indigo-100 mt-7">
-  <%= render "form.html", Map.put(assigns, :action, Routes.bill_path(@conn, :create)) %>
+  <%= render "form.html", Map.put(assigns, :action, Routes.event_bill_path(@conn, :create, @event_id)) %>
 </turbo-frame>

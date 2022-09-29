@@ -17,9 +17,20 @@ defmodule BillCrud.Pages do
       [%Bill{}, ...]
 
   """
-  def list_bills do
+
+  def list_bills_base do
     Bill
     |> order_by(:inserted_at)
+  end
+
+  def list_bills do
+    list_bills_base()
+    |> Repo.all()
+  end
+
+  def list_bills(event_id) do
+    list_bills_base()
+    |> where(event_id: ^event_id)
     |> Repo.all()
   end
 
@@ -53,6 +64,7 @@ defmodule BillCrud.Pages do
   """
   def create_bill(attrs \\ %{}) do
     changeset = Bill.changeset(%Bill{}, attrs)
+
     with {:ok, bill} <- Repo.insert(changeset) do
       broadcast_total()
       broadcast_row(bill)
@@ -76,9 +88,10 @@ defmodule BillCrud.Pages do
 
   """
   def update_bill(%Bill{} = bill, attrs) do
-    result = bill
-    |> Bill.changeset(attrs)
-    |> Repo.update()
+    result =
+      bill
+      |> Bill.changeset(attrs)
+      |> Repo.update()
 
     broadcast_total()
     result
@@ -95,8 +108,10 @@ defmodule BillCrud.Pages do
           stream_action: "replace",
           target: "bill-#{bill.id}-row"
         )
+
         broadcast_total()
         {:ok, bill}
+
       {status, bill} ->
         {status, bill}
     end
@@ -157,7 +172,13 @@ defmodule BillCrud.Pages do
 
   def broadcast_total() do
     rendered_total = BillCrudWeb.BillView.render("summary.html", %{total: total()})
-    BillCrudWeb.RenderHelper.broadcast_inline_stream("replace", "summary", "bills-index", rendered_total)
+
+    BillCrudWeb.RenderHelper.broadcast_inline_stream(
+      "replace",
+      "summary",
+      "bills-index",
+      rendered_total
+    )
   end
 
   def broadcast_row({:error, changeset}) do
@@ -186,5 +207,101 @@ defmodule BillCrud.Pages do
   """
   def change_bill(%Bill{} = bill, attrs \\ %{}) do
     Bill.changeset(bill, attrs)
+  end
+
+  alias BillCrud.Pages.Events
+
+  @doc """
+  Returns the list of events.
+
+  ## Examples
+
+      iex> list_events()
+      [%Events{}, ...]
+
+  """
+  def list_events do
+    Repo.all(Events)
+  end
+
+  @doc """
+  Gets a single events.
+
+  Raises `Ecto.NoResultsError` if the Events does not exist.
+
+  ## Examples
+
+      iex> get_events!(123)
+      %Events{}
+
+      iex> get_events!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_events!(id), do: Repo.get!(Events, id)
+
+  @doc """
+  Creates a events.
+
+  ## Examples
+
+      iex> create_event(%{field: value})
+      {:ok, %Events{}}
+
+      iex> create_event(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_event(attrs \\ %{}) do
+    %Events{}
+    |> Events.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a events.
+
+  ## Examples
+
+      iex> update_events(events, %{field: new_value})
+      {:ok, %Events{}}
+
+      iex> update_events(events, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_events(%Events{} = events, attrs) do
+    events
+    |> Events.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a events.
+
+  ## Examples
+
+      iex> delete_events(events)
+      {:ok, %Events{}}
+
+      iex> delete_events(events)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_events(%Events{} = events) do
+    Repo.delete(events)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking events changes.
+
+  ## Examples
+
+      iex> change_events(events)
+      %Ecto.Changeset{data: %Events{}}
+
+  """
+  def change_events(%Events{} = events, attrs \\ %{}) do
+    Events.changeset(events, attrs)
   end
 end
