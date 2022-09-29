@@ -4,7 +4,7 @@ defmodule BillCrud.Pages.Bill do
 
   schema "bills" do
     field :description, :string
-    field :value, :integer
+    field :value, Money.Ecto.Amount.Type
     belongs_to :event, BillCrud.Pages.Events
     timestamps()
   end

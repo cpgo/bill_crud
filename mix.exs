@@ -50,7 +50,8 @@ defmodule BillCrud.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:phoenix_turbo, git: "https://github.com/cpgo/phoenix_turbo.git", branch: "dev"},
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:money, "~> 1.11"}
     ]
   end
 

@@ -63,6 +63,10 @@ config :tailwind, version: "3.1.6", default: [
   ),
   cd: Path.expand("../assets", __DIR__)
 ]
+
+config :money,
+  default_currency: :BRL
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
