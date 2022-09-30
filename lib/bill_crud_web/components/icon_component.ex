@@ -1,7 +1,7 @@
 defmodule BillCrudWeb.Components.IconComponent do
   use Phoenix.Component
 
-  def green(assigns) do
+  def yellow(assigns) do
     ~H"""
     <div class="inline-block mr-2 ">
       <div class="flex items-center h-full pr-2">
@@ -20,7 +20,7 @@ defmodule BillCrudWeb.Components.IconComponent do
           <circle cx="12" cy="12" r="9" />
           <path d="M9 12l2 2l4 -4" />
         </svg>
-        <p class="font-medium title-font">Python</p>
+        <p class="font-medium title-font"><%= @text %></p>
       </div>
     </div>
     """
@@ -43,7 +43,7 @@ defmodule BillCrudWeb.Components.IconComponent do
           <line x1="15" y1="9" x2="9" y2="15" />
           <line x1="9" y1="9" x2="15" y2="15" />
         </svg>
-        <p class="font-medium title-font">Swift</p>
+        <p class="font-medium title-font"><%= @text %></p>
       </div>
     </div>
     """
