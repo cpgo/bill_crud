@@ -1,26 +1,36 @@
-<h1>Listing Events</h1>
+<div class="bg-gray-100">
+<%= for event <- @events do %>
+            <section>
+                <section class="text-gray-600 body-font">
+                    <div class="container px-5 mx-auto">
+                        <div class="flex flex-col items-center p-5 mx-auto mb-10 bg-white border-b border-gray-200 rounded-lg sm:flex-row">
+                        <div class="inline-flex items-center justify-center flex-shrink-0 w-20 h-20 sm:w-32 sm:h-32 sm:mr-10">
+                            <img
+                              src="" alt="placeholder"/>
+                        </div>
+                        <div class="flex-grow mt-6 text-center sm:text-left sm:mt-0">
+                            <h1 class="mb-2 text-2xl font-bold text-black title-font"><%= event.name %></h1>
+                            <p class="text-base leading-relaxed">event.description placeholder</p>
+                            <div class="py-4">
+                                <BillCrudWeb.Components.IconComponent.green />
+                                <BillCrudWeb.Components.IconComponent.gray />
+                            </div>
+                            <div class="font-bold text-gray-800 md:flex">
+                                <div class="flex w-full space-x-3 md:w-1/2">
+                                <BillCrudWeb.Components.EventSummary.text description="Total" value="$123"/>
+                                <BillCrudWeb.Components.EventSummary.text description="Quantas pessoas" value="4"/>
+                                <BillCrudWeb.Components.EventSummary.text description="Media por pessoa" value="678"/>
+                            </div>
+                            </div>
+                            <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
+                            <BillCrudWeb.Components.EventSummary.link_arrow conn={@conn} event={event}/>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
+                        </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for events <- @events do %>
-    <tr>
-      <td><%= events.name %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.event_path(@conn, :show, events) %></span>
-        <span><%= link "Edit", to: Routes.event_path(@conn, :edit, events) %></span>
-        <span><%= link "Delete", to: Routes.event_path(@conn, :delete, events), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
 <% end %>
-  </tbody>
-</table>
 
-<span><%= link "New Events", to: Routes.event_path(@conn, :new) %></span>
+</div>
