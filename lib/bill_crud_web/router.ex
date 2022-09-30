@@ -1,6 +1,7 @@
 defmodule BillCrudWeb.Router do
   use BillCrudWeb, :router
   import Phoenix.LiveDashboard.Router
+
   pipeline :browser do
     plug :accepts, ["html", "turbo-html"]
     plug :fetch_session
@@ -58,7 +59,6 @@ defmodule BillCrudWeb.Router do
   # you can use Plug.BasicAuth to set up some basic authentication
   # as long as you are also using SSL (which you should anyway).
   # if Mix.env() in [:dev, :test] do
-
 
   #   scope "/" do
   #     pipe_through :browser

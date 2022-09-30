@@ -25,6 +25,7 @@ defmodule BillCrudWeb.BillControllerTest do
 
   describe "create bill" do
     setup [:create_event]
+
     test "redirects to show when data is valid", %{conn: conn, event: event} do
       conn = post(conn, Routes.event_bill_path(conn, :create, event.id), bill: @create_attrs)
 
@@ -53,7 +54,12 @@ defmodule BillCrudWeb.BillControllerTest do
     setup [:create_bill]
 
     test "redirects when data is valid", %{conn: conn, bill: bill} do
-      conn = put(conn, Routes.event_bill_path(conn, :update, bill.event_id, bill ), bill: @update_attrs, event_id: bill.event_id)
+      conn =
+        put(conn, Routes.event_bill_path(conn, :update, bill.event_id, bill),
+          bill: @update_attrs,
+          event_id: bill.event_id
+        )
+
       assert redirected_to(conn) == Routes.event_bill_path(conn, :show, bill.event_id, bill)
 
       conn = get(conn, Routes.event_bill_path(conn, :show, bill.event_id, bill))
@@ -61,7 +67,9 @@ defmodule BillCrudWeb.BillControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, bill: bill} do
-      conn = put(conn, Routes.event_bill_path(conn, :update, bill.event_id, bill), bill: @invalid_attrs)
+      conn =
+        put(conn, Routes.event_bill_path(conn, :update, bill.event_id, bill), bill: @invalid_attrs)
+
       assert html_response(conn, 422) =~ "Edit Bill"
     end
   end

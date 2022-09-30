@@ -1,5 +1,8 @@
 <turbo-frame id="bill-form" class="container fixed bottom-0 mx-auto bg-indigo-100 mt-7">
-  <%= render "form.html", Map.put(assigns, :action, Routes.event_bill_path(@conn, :create, @event_id)) %>
+  <%= render(
+    "form.html",
+    Map.put(assigns, :action, Routes.event_bill_path(@conn, :create, @event_id))
+  ) %>
 </turbo-frame>
 
-<span><%= link "Back", to: Routes.event_bill_path(@conn, :index, @event_id) %></span>
+<span><%= link("Back", to: Routes.event_bill_path(@conn, :index, @event_id)) %></span>

@@ -1,5 +1,5 @@
 <h1>Edit Events</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.event_path(@conn, :update, @events)) %>
+<%= render("form.html", Map.put(assigns, :action, Routes.event_path(@conn, :update, @events))) %>
 
-<span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
+<span><%= link("Back", to: Routes.event_path(@conn, :index)) %></span>
