@@ -1,11 +1,13 @@
 <h1>Show Events</h1>
 
 <ul>
+
   <li>
     <strong>Name:</strong>
     <%= @events.name %>
   </li>
+
 </ul>
 
-<span><%= link("Edit", to: Routes.event_path(@conn, :edit, @events)) %></span>
-| <span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.event_path(@conn, :edit, @events) %></span> |
+<span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>

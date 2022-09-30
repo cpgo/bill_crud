@@ -8,7 +8,6 @@ defmodule BillCrudWeb.BillController do
     bills = Pages.list_bills(event_id)
     changeset = Pages.change_bill(%Bill{}, %{event_id: event_id})
     total = Pages.total()
-
     render(conn, "index.html",
       bills: bills,
       changeset: changeset,
@@ -32,10 +31,7 @@ defmodule BillCrudWeb.BillController do
         if PhoenixTurbo.ControllerHelper.turbo_stream_request?(conn) do
           conn
           |> put_status(200)
-          |> render(:form,
-            conn: conn,
-            changeset: Pages.change_bill(%Bill{}, %{event_id: event_id})
-          )
+          |> render(:form, conn: conn, changeset: Pages.change_bill(%Bill{}, %{event_id: event_id}))
         else
           conn
           |> put_flash(:info, "Bills created successfully.")

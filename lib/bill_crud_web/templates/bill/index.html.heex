@@ -1,4 +1,4 @@
-<%= render("summary.html", assigns) %>
+<%= render "summary.html", assigns %>
 <%= turbo_stream_tag(@conn, "bills-index") %>
 
 <turbo-frame id="bills-index" class="grid grid-cols-2 gap-5">
@@ -8,8 +8,5 @@
 </turbo-frame>
 
 <turbo-frame id="bill-form" class="container fixed bottom-0 mx-auto bg-indigo-100 mt-7">
-  <%= render(
-    "form.html",
-    Map.put(assigns, :action, Routes.event_bill_path(@conn, :create, @event_id))
-  ) %>
+  <%= render "form.html", Map.put(assigns, :action, Routes.event_bill_path(@conn, :create, @event_id)) %>
 </turbo-frame>

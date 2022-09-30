@@ -51,18 +51,18 @@ config :mime, :types, %{
   "text/vnd.turbo-stream.html" => ["turbo-html"]
 }
 
-config :phoenix_view, :format_encoders, "turbo-html": Phoenix.HTML.Engine
+config :phoenix_view, :format_encoders,
+  'turbo-html': Phoenix.HTML.Engine
 
-config :tailwind,
-  version: "3.1.6",
-  default: [
-    args: ~w(
+
+config :tailwind, version: "3.1.6", default: [
+  args: ~w(
     --config=tailwind.config.js
     --input=css/app.css
     --output=../priv/static/assets/app.css
   ),
-    cd: Path.expand("../assets", __DIR__)
-  ]
+  cd: Path.expand("../assets", __DIR__)
+]
 
 config :money,
   default_currency: :BRL
