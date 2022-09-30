@@ -27,7 +27,7 @@ defmodule BillCrud.PagesTest do
 
       assert {:ok, %Bill{} = bill} = Pages.create_bill(valid_attrs)
       assert bill.description == "some description"
-      assert bill.value == 42
+      assert bill.value == %Money{amount: 42, currency: :BRL}
     end
 
     test "create_bill/1 with invalid data returns error changeset" do
@@ -40,7 +40,7 @@ defmodule BillCrud.PagesTest do
 
       assert {:ok, %Bill{} = bill} = Pages.update_bill(bill, update_attrs)
       assert bill.description == "some updated description"
-      assert bill.value == 43
+      assert bill.value == %Money{amount: 43, currency: :BRL}
     end
 
     test "update_bill/2 with invalid data returns error changeset" do

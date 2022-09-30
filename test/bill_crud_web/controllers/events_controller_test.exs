@@ -10,14 +10,14 @@ defmodule BillCrudWeb.EventsControllerTest do
   describe "index" do
     test "lists all events", %{conn: conn} do
       conn = get(conn, Routes.event_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Events"
+      assert html_response(conn, 200) =~ "New Event"
     end
   end
 
   describe "new events" do
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.event_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Events"
+      assert html_response(conn, 200) =~ "New Event"
     end
   end
 
