@@ -1,5 +1,6 @@
 defmodule BillCrudWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :bill_crud
+  use Appsignal.Phoenix
   use PhoenixTurbo.StreamHelper
 
   # The session will be stored in the cookie and signed,
