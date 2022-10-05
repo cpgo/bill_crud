@@ -52,7 +52,8 @@ defmodule BillCrud.MixProject do
       {:phoenix_turbo, git: "https://github.com/cpgo/phoenix_turbo.git", branch: "dev"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:money, "~> 1.11"},
-      {:ecto_psql_extras, "~> 0.6"}
+      {:ecto_psql_extras, "~> 0.6"},
+      {:appsignal_phoenix, "~> 2.0"}
     ]
   end
 
